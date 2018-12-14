@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar> <ion-title>Sign Up for Pathshala</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <!-- Username -->
+    <div class="form-group">
+        <label for="inputUsername">Username</label>
+        <input type="email" [(ngModel)]="appUser.username" class="form-control" name="inputUsername" aria-describedby="usernameHelp" placeholder="Enter username"/>
+      </div>
+
+    <!-- Password -->
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" [(ngModel)]="appUser.password" class="form-control" name="inputPassword" placeholder="Password" />
+      </div>
+
+    <!-- Email Address -->
+    <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input type="email" [(ngModel)]="appUser.email" class="form-control" name="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
+    </div>
+
+
+    <button default="true" color="primary" ion-button (click)="register()">
+      Sign Up
+    </button>
+
+<!-- <H5> Sign up for Pathshala using </H5>
+      <button ion-button icon-start full (click)="registerWithFacebook()"><ion-icon name="logo-facebook" left></ion-icon> Facebook</button>
+      <button ion-button color="danger" icon-start full><ion-icon name="logo-google" left></ion-icon>Google</button> -->
+  </form>
+</ion-content>
