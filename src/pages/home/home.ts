@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavController, AlertController } from "ionic-angular";
 
 import { User } from "../../models/model.user";
@@ -13,29 +13,13 @@ import { EventEmiterService } from "../../services/service.event.emmiter";
   selector: "page-home",
   templateUrl: "home.html"
 })
-export class HomePage {
-
+export class HomePage implements OnInit {
   private user: User = new User();
   public isLoginOk: boolean = false;
   public showVerifyMessage: boolean = false;
   public currentUser: any;
 
-
-  constructor(public navCtrl: NavController, public loginService: LoginService, public alertCtrl: AlertController, public _eventEmitter: EventEmiterService
-    ) {
-    // this.isLoginOk = this.loginService.isLoginOk;
-    this._eventEmitter.loginOk.subscribe(data => {
-      console.log(data);
-      this.isLoginOk = data;
-    });
-
-    this._eventEmitter.showEmailVerificationMessage.subscribe(data => {
-      this.showVerifyMessage = data;
-    });
-
-    this.currentUser = this.loginService.getCurrentUser()
-
-  }
+  constructor(public navCtrl: NavController, public loginService: LoginService, public alertCtrl: AlertController, public _eventEmitter: EventEmiterService) {}
 
   register() {
     this.navCtrl.push(RegisterPage);
@@ -43,43 +27,71 @@ export class HomePage {
 
   login() {
     this.showVerifyMessage = false;
-    this.loginService.login(this.user);
-  }
-
-  loginWithFacebook() {
-    this.loginService.loginWithFacebook().subscribe(resp => {
-      console.log(resp);
-     //this.isLoginOk = true;
+    this.loginService.login(this.user).subscribe(resp=>{
+      if (!resp.user.emailVerified) {
+        this.showEmailVerificationAlert();
+      }
     });
   }
 
 
-  loginWithGoogle() {
-    this.loginService.loginWithGoogle().subscribe(resp => {
-      console.log(resp);
-      //this.isLoginOk = true;
+  loginWithProvider(provider:string) {
+    this.loginService.loginWithProvider(provider).subscribe(resp => {
+
+      if (!resp.user.emailVerified) {
+        this.showEmailVerificationAlert();
+      }
+
+
     });
   }
 
-  // this.angularFireAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password).then(resp => {
-  //   console.log(resp);
-  // }).catch(err => {
-  //   this.authError = err;
-  //   this.showAlert();
-  // });
+
+  // loginWithFacebook() {
+  //   this.loginService.loginWithFacebook().subscribe(resp => {
+  //     console.log(resp);
+  //     //this.isLoginOk = true;
+  //   });
+  // }
+
+  // loginWithGoogle() {
+  //   this.loginService.loginWithGoogle().subscribe(resp => {
+  //     console.log(resp);
+  //     //this.isLoginOk = true;
+  //   });
+  // }
+
 
   logout() {
     this.loginService.logout();
   }
 
-  // showAlert() {
-  //   const alert = this.alertCtrl.create({
-  //     title: "Invalid Login",
-  //     subTitle: this.authError.message,
-  //     buttons: ["OK"]
-  //   });
-  //   alert.present();
-  // }
+
+  ngOnInit() {
+    this._eventEmitter.loginOk.subscribe(data => {
+      this.isLoginOk = data;
+      console.log(this.isLoginOk);
+    });
+
+    this._eventEmitter.showEmailVerificationMessage.subscribe(data => {
+      this.showVerifyMessage = data;
+
+      // if (data){
+      //   this.showEmailVerificationAlert();
+      // }
+
+    });
+
+    this.currentUser = this.loginService.getCurrentUser();
+  }
 
 
+  showEmailVerificationAlert() {
+    let alert = this.alertCtrl.create({
+      title: "Email Verification Required",
+      subTitle: "You will receive an email from Pathshala for email verification, plase check your email and verify to continue.",
+      buttons: ["Dismiss"]
+    });
+    alert.present();
+  }
 }

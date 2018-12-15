@@ -10,7 +10,7 @@
 <ion-content padding>
   <div class="card">
     <img class="card-img-top" src="../../assets/imgs/logo.jpg" alt="Card image cap" />
-    <div class="card-body" *ngIf="showVerifyMessage"><div class="alert alert-danger" role="alert">You will receive an email from Pathshala for email verification, plase check your email and verify to continue.</div></div>
+    <!-- <div class="card-body" *ngIf="showVerifyMessage && !isLoginOk"><div class="alert alert-danger" role="alert">You will receive an email from Pathshala for email verification, plase check your email and verify to continue.</div></div> -->
   </div>
   <hr />
   <form *ngIf="!isLoginOk">
@@ -20,18 +20,28 @@
 
     <button default="true" color="primary" ion-button (click)="login()">Sign In</button> <button clear="true" color="default" ion-button (click)="register()">Need an Account? Create ...</button>
     <h5>Sign In Pathshala using</h5>
-    <button default="true" ion-button icon-start (click)="loginWithFacebook()"><ion-icon name="logo-facebook" left></ion-icon>Facebook</button> <button default="true" ion-button color="danger" (click)="loginWithGoogle()" icon-start><ion-icon name="logo-google" left></ion-icon>Google</button>
+    <button default="true" ion-button icon-start (click)="loginWithProvider('FACEBOOK')"><ion-icon name="logo-facebook" left></ion-icon>Facebook</button>
+    <button default="true" ion-button color="danger" (click)="loginWithProvider('GOOGLE')" icon-start><ion-icon name="logo-google" left></ion-icon>Google</button>
   </form>
 
-  <!--
-    <ion-list>
+<!-- Feeds -->
+    <ion-list *ngIf="isLoginOk">
+        <ion-list-header>
+            Activities
+          </ion-list-header>
       <ion-item>
         <button  ion-button ion-button-lg (click)="login()">Login</button>
+      </ion-item>
+    <ion-item>
         <button default=true color="dark" ion-button (click)="register()">Register</button>
+      </ion-item>
+      <ion-item>
         <button ion-button (click)="logout()">Log Out</button>
+      </ion-item>
+      <ion-item>
         <button default=true color="dark" ion-button (click)="register()">No Account? Create</button>
       </ion-item>
 
     </ion-list>
-  -->
+
 </ion-content>
