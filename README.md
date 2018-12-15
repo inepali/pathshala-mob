@@ -1,6 +1,6 @@
 # pathshala-mob
 
-command to run after the git clone
+Run following command after  git clone
 
 npm install
 
