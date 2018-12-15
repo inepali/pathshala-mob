@@ -3,32 +3,27 @@
 </ion-header>
 
 <ion-content padding>
-  <form>
-    <!-- Username -->
-    <div class="form-group">
-        <label for="inputUsername">Username</label>
-        <input type="email" [(ngModel)]="appUser.username" class="form-control" name="inputUsername" aria-describedby="usernameHelp" placeholder="Enter username"/>
-      </div>
+  <div class="alert alert-primary" role="alert" *ngIf="showMessage">You will receive an email from Pathshala for email verification, plase check your email and verify to continue.</div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="errMessage">{{ errMessage }}</div>
+
+  <form *ngIf="!showMessage">
+    <!-- Email Address -->
+    <div class="form-group"><label for="inputEmail">Email (Username) </label> <input type="email" [(ngModel)]="appUser.email" class="form-control" name="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" /></div>
 
     <!-- Password -->
-    <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" [(ngModel)]="appUser.password" class="form-control" name="inputPassword" placeholder="Password" />
-      </div>
+    <div class="form-group"><label for="inputPassword">Password</label> <input type="password" [(ngModel)]="appUser.password" class="form-control" name="inputPassword" placeholder="Password" /></div>
 
-    <!-- Email Address -->
-    <div class="form-group">
-      <label for="inputEmail">Email</label>
-      <input type="email" [(ngModel)]="appUser.email" class="form-control" name="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
-    </div>
+    <!-- Password Retyupe -->
+    <div class="form-group"><label for="inputPassword">Repeat Password</label> <input type="password" [(ngModel)]="passwordRetype" class="form-control" name="inputPassword1" placeholder="Password" /></div>
 
-
-    <button default="true" color="primary" ion-button (click)="register()">
-      Sign Up
-    </button>
-
-<!-- <H5> Sign up for Pathshala using </H5>
-      <button ion-button icon-start full (click)="registerWithFacebook()"><ion-icon name="logo-facebook" left></ion-icon> Facebook</button>
-      <button ion-button color="danger" icon-start full><ion-icon name="logo-google" left></ion-icon>Google</button> -->
+    <button default="true" color="primary" ion-button (click)="register()">Sign Up</button>
   </form>
+  <button default="true" color="primary" ion-button (click)="continue()" *ngIf="showMessage">Continue</button>
+
+  <!--
+    <H5> Sign up for Pathshala using </H5>
+     <button ion-button icon-start full (click)="registerWithFacebook()"><ion-icon name="logo-facebook" left></ion-icon> Facebook</button>
+     <button ion-button color="danger" icon-start full><ion-icon name="logo-google" left></ion-icon>Google</button>
+  -->
 </ion-content>

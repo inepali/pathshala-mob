@@ -22,6 +22,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { RegisterPage } from '../pages/register/register';
 import { LoginService } from '../services/service.login';
 import { EventEmiterService } from '../services/service.event.emmiter';
+import { StudentPage } from '../pages/student/student';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { EventEmiterService } from '../services/service.event.emmiter';
     AboutPage,
     ContactPage,
     HomePage,
+    StudentPage,
     SettingsPage,
     RegisterPage,
     TabsPage
@@ -47,6 +49,7 @@ import { EventEmiterService } from '../services/service.event.emmiter';
     MyApp,
     AboutPage,
     ContactPage,
+    StudentPage,
     HomePage,
     SettingsPage,
     RegisterPage,
